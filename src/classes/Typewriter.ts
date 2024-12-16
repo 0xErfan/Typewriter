@@ -7,7 +7,7 @@ type InitTypewriterProps = {
     pauseDuration?: number
 }
 
-class Typewriter {
+export default class Typewriter {
 
     element: HTMLElement;
     typingSpeed: number;
@@ -96,6 +96,3 @@ class Typewriter {
     }
 
 }
-
-const myTypewriter = new Typewriter({ element: document.querySelector('.main_line_typewriter')! })
-myTypewriter.startTyping(['ایزو ویزیت خوب', 'ایزو ویزیت بد', 'ایزو ویزیت خیلی بد'], 'title')

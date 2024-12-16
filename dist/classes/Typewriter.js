@@ -1,5 +1,4 @@
-"use strict";
-class Typewriter {
+export default class Typewriter {
     constructor({ element, typingSpeed = 200, cursorBlinking = true, cursorCharacter = '|', pauseDuration = 1000 }) {
         this.activeTypings = {};
         this.element = element;
