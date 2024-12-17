@@ -7,10 +7,6 @@ export default class Typewriter {
         this.cursorCharacter = cursorCharacter;
         this.pauseDuration = pauseDuration;
     }
-    setTypingSpeed(val) {
-        this.typingSpeed = val;
-        return this;
-    }
     startTyping(text, ref) {
         if (typeof text !== 'string' && !Array.isArray(text))
             throw new Error('only string & array of strings are acceptable buddy');

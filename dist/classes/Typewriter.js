@@ -1,11 +1,16 @@
 export default class Typewriter {
     constructor({ element, typingSpeed = 200, cursorBlinking = true, cursorCharacter = '|', pauseDuration = 1000 }) {
         this.activeTypings = {};
+        this.isFreezed = false;
         this.element = element;
         this.typingSpeed = typingSpeed;
         this.cursorBlinking = cursorBlinking;
         this.cursorCharacter = cursorCharacter;
         this.pauseDuration = pauseDuration;
+    }
+    setTypingSpeed(val) {
+        this.typingSpeed = val;
+        return this;
     }
     startTyping(text, ref) {
         if (typeof text !== 'string' && !Array.isArray(text))
@@ -20,11 +25,15 @@ export default class Typewriter {
         let textsArray = Array.isArray(text) ? text : null;
         let currentArrayIndex = 0;
         const startTimer = (current_word) => {
+            clearInterval(speedTimer);
             let active_word_index = 0;
             let timeout;
             speedTimer = setInterval(() => {
+                if (this.isFreezed)
+                    return;
+                // update the interval id on every iteration
                 if (String(ref))
-                    this.activeTypings[String(ref)] = speedTimer; // update the interval id on every iteration
+                    this.activeTypings[String(ref)] = speedTimer;
                 this.element.innerText = current_word.slice(0, active_word_index); // .concat(this.cursorCharacter)
                 if (active_word_index === current_word.length) {
                     let nextWord = text;
@@ -48,6 +57,14 @@ export default class Typewriter {
             }, this.typingSpeed);
         };
         startTimer(textsArray ? textsArray[currentArrayIndex] : text);
+        return this;
+    }
+    waitUntil(val) {
+        if (typeof val !== 'number')
+            throw new Error('not a valid prop');
+        clearTimeout(this.freezeTimer);
+        this.isFreezed = true;
+        setTimeout(() => this.isFreezed = false, val);
         return this;
     }
     clearTyping(ref) {

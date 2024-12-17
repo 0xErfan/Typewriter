@@ -15,7 +15,9 @@ export default class Typewriter {
     cursorCharacter: string;
     pauseDuration: number;
 
-    activeTypings: Record<string, number> = {}
+    activeTypings: Record<string, number> = {};
+    isFreezed: boolean = false;
+    freezeTimer: number | undefined;
 
     constructor({
         element,
@@ -29,6 +31,11 @@ export default class Typewriter {
         this.cursorBlinking = cursorBlinking;
         this.cursorCharacter = cursorCharacter;
         this.pauseDuration = pauseDuration;
+    }
+
+    setTypingSpeed(val: number) {
+        this.typingSpeed = val;
+        return this;
     }
 
     startTyping(text: string | string[], ref: string) {
@@ -48,12 +55,16 @@ export default class Typewriter {
 
         const startTimer = (current_word: string | string[]) => {
 
+            clearInterval(speedTimer)
             let active_word_index = 0
             let timeout;
 
             speedTimer = setInterval(() => {
 
-                if (String(ref)) this.activeTypings[String(ref)] = speedTimer // update the interval id on every iteration
+                if (this.isFreezed) return;
+
+                // update the interval id on every iteration
+                if (String(ref)) this.activeTypings[String(ref)] = speedTimer
 
                 this.element.innerText = (current_word as string).slice(0, active_word_index) // .concat(this.cursorCharacter)
 
@@ -86,6 +97,18 @@ export default class Typewriter {
 
         startTimer(textsArray ? textsArray[currentArrayIndex] : text)
         return this;
+    }
+
+    waitUntil(val: number) {
+
+        if (typeof val !== 'number') throw new Error('not a valid prop')
+
+        clearTimeout(this.freezeTimer)
+        this.isFreezed = true
+        setTimeout(() => this.isFreezed = false, val);
+
+        return this;
+
     }
 
     clearTyping(ref: string) {
