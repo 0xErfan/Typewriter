@@ -4,4 +4,10 @@ const myTypewriter = new Typewriter(document.querySelector('.main_line_typewrite
 
 myTypewriter
     .setTypingSpeed(100)
-    .startTyping(['isovisit, i don not know', 'isovisit, a good place', 'isovisti, i bad place.'], 'title')
+    .startTyping(
+        ['isovisit, i don not know', 'isovisit, a good place', 'isovisti, i bad place.'],
+        'title',
+        (data: string = 'hi') => {
+            return { name: 'erfan', age: 23 }
+        }
+    )

@@ -37,11 +37,12 @@ export default class Typewriter {
         return this;
     }
 
-    startTyping(text: string | string[], ref: string) {
+    startTyping<T>(text: string | string[], ref: string, callback?: (...args: any[]) => T extends infer R ? R : never) {
 
         if (typeof text !== 'string' && !Array.isArray(text)) throw new Error('only string & array of strings are acceptable buddy')
 
         let speedTimer: number;
+        let callbackAfterInterval = (callback && typeof callback === 'function') ? callback : () => { };
         let is_ref_exist;
 
         if (ref) {
@@ -84,11 +85,15 @@ export default class Typewriter {
                     clearTimeout(timeout)
                     active_word_index = 0
 
-                    setTimeout(() => startTimer(nextWord), this.pauseDuration) // wait for pauseDuration & start;
+                    setTimeout(() => {
+                        startTimer(nextWord)
+                        callbackAfterInterval()
+                    }, this.pauseDuration) // wait for pauseDuration & start;
 
                 } else {
                     active_word_index++
                 }
+
 
             }, this.typingSpeed)
 
