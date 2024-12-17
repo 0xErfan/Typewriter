@@ -1,7 +1,10 @@
 export default class Typewriter {
-    constructor({ element, typingSpeed = 200, cursorBlinking = true, cursorCharacter = '|', pauseDuration = 1000 }) {
+    constructor(element, configs) {
         this.activeTypings = {};
         this.isFreezed = false;
+        if (!element)
+            throw new Error('provided element not found btw.');
+        const { typingSpeed = 200, cursorBlinking = true, cursorCharacter = '|', pauseDuration = 1000 } = configs || {};
         this.element = element;
         this.typingSpeed = typingSpeed;
         this.cursorBlinking = cursorBlinking;

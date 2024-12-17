@@ -1,6 +1,6 @@
 import Typewriter from '../classes/Typewriter.js'
 
-const myTypewriter = new Typewriter({ element: document.querySelector('.main_line_typewriter')! })
+const myTypewriter = new Typewriter(document.querySelector('.main_line_typewriter')!)
 
 myTypewriter
     .setTypingSpeed(100)

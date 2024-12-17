@@ -19,18 +19,17 @@ export default class Typewriter {
     isFreezed: boolean = false;
     freezeTimer: number | undefined;
 
-    constructor({
-        element,
-        typingSpeed = 200,
-        cursorBlinking = true,
-        cursorCharacter = '|',
-        pauseDuration = 1000
-    }: InitTypewriterProps) {
+    constructor(element: HTMLElement, configs?: InitTypewriterProps) {
+
+        if (!element) throw new Error('provided element not found btw.')
+
+        const { typingSpeed = 200, cursorBlinking = true, cursorCharacter = '|', pauseDuration = 1000 } = configs || {}
         this.element = element;
         this.typingSpeed = typingSpeed;
         this.cursorBlinking = cursorBlinking;
         this.cursorCharacter = cursorCharacter;
         this.pauseDuration = pauseDuration;
+
     }
 
     setTypingSpeed(val: number) {
