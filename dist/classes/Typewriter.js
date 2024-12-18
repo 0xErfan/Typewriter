@@ -33,7 +33,7 @@ export default class Typewriter {
             let active_word_index = 0;
             let timeout;
             this.element.innerHTML = '';
-            this.element.insertAdjacentHTML('beforeend', `<span class="typewriter_text"></span><span class="Typewriter-cursor"> |</span>`);
+            this.element.insertAdjacentHTML('beforeend', `<span class="typewriter_text"></span><span style="display: ${this.cursorBlinking ? 'inline' : 'none'}" class="Typewriter-cursor">${this.cursorCharacter}</span>`);
             speedTimer = setInterval(() => {
                 if (this.isFreezed)
                     return;

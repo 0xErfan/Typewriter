@@ -60,7 +60,7 @@ export default class Typewriter {
             let timeout;
 
             this.element.innerHTML = ''
-            this.element.insertAdjacentHTML('beforeend', `<span class="typewriter_text"></span><span class="Typewriter-cursor"> |</span>`)
+            this.element.insertAdjacentHTML('beforeend', `<span class="typewriter_text"></span><span style="display: ${this.cursorBlinking ? 'inline' : 'none'}" class="Typewriter-cursor">${this.cursorCharacter}</span>`)
 
             speedTimer = setInterval(() => {
 
