@@ -32,13 +32,16 @@ export default class Typewriter {
             clearInterval(speedTimer);
             let active_word_index = 0;
             let timeout;
+            this.element.innerHTML = '';
+            this.element.insertAdjacentHTML('beforeend', `<span class="typewriter_text"></span><span class="Typewriter-cursor"> |</span>`);
             speedTimer = setInterval(() => {
                 if (this.isFreezed)
                     return;
                 // update the interval id on every iteration
                 if (String(ref))
                     this.activeTypings[String(ref)] = speedTimer;
-                this.element.innerText = current_word.slice(0, active_word_index); // .concat(this.cursorCharacter)
+                // TODO: html tags as string like '<' are viewed, but it should not btw.
+                this.element.querySelector('.typewriter_text').innerHTML = current_word.slice(0, active_word_index);
                 if (active_word_index === current_word.length) {
                     let nextWord = text;
                     if (textsArray) { // if the given tex prop is array, we update the array current index for next typing iteration btw
